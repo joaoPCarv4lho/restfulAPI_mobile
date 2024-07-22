@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     },
     img:{
         type: String,
-        required: true, //setar um false no required da img
+        required: false, //setar um false no required da img
         default: null,
     },
     points:{
