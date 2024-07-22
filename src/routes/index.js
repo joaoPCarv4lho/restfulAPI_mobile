@@ -3,7 +3,7 @@ import userRouter from "./user.route.js";
 import productRouter from "./product.route.js";
 import authRouter from "./auth.route.js";
 import cartRouter from "./cart.route.js";
-import swaggerRouter from "./swagger.route.js"
+import swaggerRouter from "./swagger.route.cjs"
 
 const router = Router();
 
