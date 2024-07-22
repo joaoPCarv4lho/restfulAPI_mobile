@@ -1,0 +1,629 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Ecommerce API documentation",
+        "description": "In this documentation you will ba able to consult the API end-points and elso test all available routes. Do not forget to register and carry out the authorization",
+        "contact": {
+            "email": "joaopaullogcarvalho@gmail.com"
+    },
+    "version": "1.0.0"
+},
+    "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/api/user/register": {
+            "post": {
+                "summary": "Register a new user",
+                "description": "Route responsible for creating a new user",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "example": {
+                                "name": "João Paulo",
+                                "username": "joaoCarvalho",
+                                "email": "codejp@gmail.com",
+                                "password": "1234567",
+                                "img": "https://avatars.githubusercontent.com/u/59859395?v=4"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/list": {
+            "get": {
+                "summary": "List all users",
+                "description": "Route responsible for listing all users",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }, 
+        "/api/user/{id}/": {
+            "get": {
+                "summary": "Find user by id",
+                "description": "Route responsible for finding a user by id",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "User id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{id}": {
+            "patch": {
+                "summary": "Update user by id",
+                "description": "Route responsible for editing the user by id",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "User id",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "example": {
+                                "Users": {
+                                    "value": {
+                                        "username": "jpCarvalho"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "summary": "Login",
+                "description": "Route responsible for logging in",
+                "tags": ["Auth"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "example": {
+                                "User": {
+                                    "value": {
+                                        "email": "codejp@gmail.com",
+                                        "password": "1234567"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "User logged in successfully"
+                    }
+                }
+            }
+        },
+        "/api/product/create": {
+            "post": {
+                "summary": "Create a new product",
+                "description": "Route responsible for creating a new product",
+                "tags": ["Products"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "example": {
+                                "Product": {
+                                    "value": {
+                                        "name": "Casaco",
+                                        "description": "Casaco Moletom azul, tamanho M com 1 mês de uso",
+                                        "price": 100,
+                                        "img": "imagemcasacomoletomazul.jpg"
+                                    }
+                                
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "201": {
+                        "description": "Product created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/list": {
+            "get": {
+                "summary": "List all products",
+                "description": "Route responsible for listing all products",
+                "tags": ["Products"],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/search": {
+            "get": {
+                "summary": "Search product by name",
+                "description": "Route responsible for searching for a product by name",
+                "tags": ["Products"],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/findById/{id}": {
+            "get": {
+                "summary": "Find product by id",
+                "description": "Route responsible for finding a product by id",
+                "tags": ["Products"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Product id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/byUser": {
+            "get": {
+                "summary": "List all products by user",
+                "description": "Route responsible for listing all products by user",
+                "tags": ["Products"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/update/{id}": {
+            "patch": {
+                "summary": "Update product by id",
+                "description": "Route responsible for editing the product by id",
+                "tags": ["Products"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Product id",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "example": {
+                                "Product": {
+                                    "value": {
+                                        "name": "",
+                                        "description": "",
+                                        "price": 0,
+                                        "img": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "Product updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/remove/{id}": {
+            "delete": {
+                "summary": "Remove product by id",
+                "description": "Route responsible for removing the product by id",
+                "tags": ["Products"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Product id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "Product removed successfully"
+                    }
+                }
+            }
+        },
+        "/api/cart/add/{id}": {
+            "patch": {
+                "summary": "Add product to cart",
+                "description": "Route responsible for adding a product to the cart",
+                "tags": ["Cart"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Product id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "Product added to cart successfully"
+                    }
+                }
+            }
+        },
+        "/api//cart/purchase": {
+            "patch": {
+                "summary": "Purchase cart",
+                "description": "Route responsible for purchasing the cart",
+                "tags": ["Cart"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "Product id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "Cart purchased successfully"
+                    }
+                }
+            }
+        },
+        "/api//cart/remove/{id}": {
+            "patch": {
+                "summary": "Remove product from cart",
+                "description": "Route responsible for removing a product from the cart",
+                "tags": ["Cart"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Product id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "200": {
+                        "description": "Product removed from cart successfully"
+                    }
+                }
+            }
+        }
+        },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "img": {
+                        "type": "string"
+                    },
+                    "cart": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "price": {
+                                    "type": "number"
+                                },
+                                "img": {
+                                    "type": "string"
+                                },
+                                "createdAt": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "historic": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "price": {
+                                    "type": "number"
+                                },
+                                "img": {
+                                    "type": "string"
+                                },
+                                "createdAt": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "img": {
+                        "type": "string"
+                    },
+                    "createdAt": "string"
+                }
+            }
+        }
+    }
+}
