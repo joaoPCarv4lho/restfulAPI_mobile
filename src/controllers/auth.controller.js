@@ -7,7 +7,7 @@ export async function login(req, res){
     const user = await loginService(email, password);
     try{
         const { name, email, img, username, points, token } = user;
-        sendSuccesResponse(res, 200, message, {name, email, img, username, points, token});
+        sendSuccesResponse(res, 200, "Login Successfully", {name, email, img, username, points, token});
     }catch(e){
         sendErrorResponse(res, 500, e.message);
     }
