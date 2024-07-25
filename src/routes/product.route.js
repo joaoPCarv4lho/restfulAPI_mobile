@@ -12,7 +12,7 @@ productRouter.use(authMiddleware);
 productRouter.post('/create', createProduct);
 
 productRouter.use(validID);
-productRouter.get('/byUser', byUser);
+productRouter.get('/byUser/:id', byUser);
 productRouter.get('/:id', findByID);
 productRouter.patch('/:id', update);
 productRouter.delete('/:id', remove);
