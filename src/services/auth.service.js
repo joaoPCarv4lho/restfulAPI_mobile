@@ -14,22 +14,8 @@ export async function loginService(email, password) {
 
     const idUser = user._id;
     
-    const token = createToken(user._id)
+    const token = createToken(idUser)
     await updateToken(idUser, token);
-    
-    const date = generateDateFormat();
-    const userLogged = await saveLastLogin(date, user);
-    const {firstIsLogin, differentDay} = userLogged;
-    console.log(firstIsLogin, differentDay)
-    if(firstIsLogin){
-        await dailyReward(idUser, points);
-        return { message: `Parabéns! Você recebeu ${points} pontos como recompensa de login diário.`, user};
-    }
-    if(!differentDay){
-        return { message: "Você já recebeu sua recompensa de login hoje.", user};
-    }
-    
-    points += user.points;
-    await dailyReward(idUser, points);
-    return {user}
+
+    return user
 }

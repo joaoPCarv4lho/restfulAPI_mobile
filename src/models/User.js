@@ -22,7 +22,10 @@ const UserSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
-    token: String,
+    token: {
+        type: String,
+        default: null
+    },
     img:{
         type: String,
         required: false, //setar um false no required da img
