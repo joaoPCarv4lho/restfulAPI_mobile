@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
+    token: String,
     img:{
         type: String,
         required: false, //setar um false no required da img
@@ -31,21 +32,6 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0,
-    },
-    cart:{
-        type: Array,
-        required: true,
-        default: [],
-    },
-    historic:{
-        type: Array,
-        required: true,
-        default: [],
-    },
-    lastLogin:{
-        type: String,
-        required: false,
-        default: null,
     }
 })
 
