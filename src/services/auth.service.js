@@ -12,22 +12,24 @@ export async function loginService(email, password) {
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if(!passwordIsValid) throw new Error("Invalid Password!")
 
+    const idUser = user._id;
+    
     const token = createToken(user._id)
-    await updateToken(user._id, token);
+    await updateToken(idUser, token);
     
     const date = generateDateFormat();
     const userLogged = await saveLastLogin(date, user);
     const {firstIsLogin, differentDay} = userLogged;
     console.log(firstIsLogin, differentDay)
     if(firstIsLogin){
-        await dailyReward(user._id, points);
-        return {token, message: `Parabéns! Você recebeu ${points} pontos como recompensa de login diário.`, user};
+        await dailyReward(idUser, points);
+        return { message: `Parabéns! Você recebeu ${points} pontos como recompensa de login diário.`, user};
     }
     if(!differentDay){
-        return {token, message: "Você já recebeu sua recompensa de login hoje.", user};
+        return { message: "Você já recebeu sua recompensa de login hoje.", user};
     }
     
     points += user.points;
-    await dailyReward(user._id, points);
-    return {token, user}
+    await dailyReward(idUser, points);
+    return {user}
 }
